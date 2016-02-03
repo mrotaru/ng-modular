@@ -1,0 +1,10 @@
+<div ng-controller="NavController as vm">
+  <h3>Navigation</h3>
+  <ul class="nav">
+    <li ng-repeat='route in vm.routes'>
+      <a href="#{{route.originalPath}}">
+        {{route.title}}
+      </a>
+    </li>
+  </ul>
+</div>
