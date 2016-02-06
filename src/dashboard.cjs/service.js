@@ -14,7 +14,8 @@ function DashboardService() {
   }
 
   function getData(url) {
+    if(!url)
+      return 'no url';
     return url.split('/').pop();
   }
 }
-

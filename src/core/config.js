@@ -3,8 +3,8 @@
 var core = angular.module("app.core");
 
 core.value('config', {
-  appErrorPrefix: '[NG-Modular Error] ', //Configure the exceptionHandler decorator
-  appTitle: 'Angular Modular Demo',
+  apperrorprefix: '[ng-modular error] ', //configure the exceptionhandler decorator
+  apptitle: 'angular modular demo',
   version: '1.0.0'
 });
 
