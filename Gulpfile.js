@@ -1,34 +1,46 @@
 var gulp = require('gulp');
+var merge = require('merge-stream');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var del = require('del');
 var connect = require('gulp-connect');
 var liveReload = require('gulp-livereload');
 
-gulp.task('default', ['copy-js', 'copy-html', 'serve', 'watch']);
+gulp.task('default', ['clean', 'copy-js', 'browserify', 'copy-html', 'serve']);
 
 gulp.task('clean', function() {
   return del('./dist');
 });
 
+var commonJsModules = [
+  './src/dashboard.cjs'
+];
+
 var jsFiles = [
   './src/**/*.js',
-  '!./src/*\.cjs/**/*.js',
   './node_modules/angular/angular.js',
   './node_modules/angular-route/angular-route.js',
-  './node_modules/angular-toastr/dist/angular-toastr.js'
-];
+  './node_modules/angular-toastr/dist/angular-toastr.js',
+  '!./src/*test*/**/*.js'
+].concat(commonJsModules.map(function(cjs){
+  return `!${cjs}/**/*.js`;
+}));
 
 var htmlFiles = [
   './src/**/*.html',
   '!./src/layout/index.html'
 ];
 
-gulp.task('browserify', function() {
-  return browserify({ entries: ['./src/dashboard.cjs/index.js'], external: 'angular', })
+gulp.task('browserify', function(cb) {
+  return merge(commonJsModules.map(function(cjs) {
+    return browserify({
+      entries: [ `${cjs}/index.js` ],
+      external: 'angular'
+    })
     .bundle()
     .pipe(source('dashboard.cjs.js'))
     .pipe(gulp.dest('./dist/js'));
+  }));
 });
 
 gulp.task('copy-js', function () {
@@ -56,11 +68,12 @@ gulp.task('copy-index', function () {
 gulp.task('watch', function() {
   liveReload.listen();
   gulp.watch(jsFiles, ['copy-js']);
+  gulp.watch(commonJsModules, ['browserify']);
   gulp.watch(htmlFiles.concat('./src/layout/index.html'), ['copy-html']);
 });
 
-gulp.task('serve', function() {
-    return connect.server({
-      root: 'dist'
-    });
+gulp.task('serve', ['browserify', 'copy-js', 'copy-html', 'copy-index'], function() {
+  return connect.server({
+    root: 'dist'
+  });
 });
