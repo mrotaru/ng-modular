@@ -4,14 +4,15 @@ angular
   .module("app.foo")
   .factory("Foo", Foo);
 
-Foo.$inject = ["$q", "$timeout"];
-function Foo($q, $timeout) {
+Foo.$inject = ["$q", "$timeout", "lib.logger"];
+function Foo($q, $timeout, logger) {
   var service = {
     getData: getData
   }
   return service;
 
   function getData() {
+    logger.info('getting data...');
     var deferred = $q.defer();
     $timeout(function() {
       deferred.resolve([

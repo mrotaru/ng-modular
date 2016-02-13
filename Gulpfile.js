@@ -1,19 +1,23 @@
+var path = require('path');
 var gulp = require('gulp');
 var merge = require('merge-stream');
+var babelify = require("babelify");
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var del = require('del');
 var connect = require('gulp-connect');
 var liveReload = require('gulp-livereload');
 
-gulp.task('default', ['clean', 'copy-js', 'browserify', 'copy-html', 'serve']);
+gulp.task('default', ['clean', 'build', 'serve']);
+gulp.task('build', ['browserify', 'copy-js', 'copy-html', 'copy-index']);
 
 gulp.task('clean', function() {
   return del('./dist');
 });
 
 var commonJsModules = [
-  './src/dashboard.cjs'
+  'dashboard.cjs',
+  'lib/logger.cjs'
 ];
 
 var jsFiles = [
@@ -31,14 +35,15 @@ var htmlFiles = [
   '!./src/layout/index.html'
 ];
 
-gulp.task('browserify', function(cb) {
+gulp.task('browserify', function() {
   return merge(commonJsModules.map(function(cjs) {
     return browserify({
-      entries: [ `${cjs}/index.js` ],
+      entries: [ `./src/${cjs}/index.js` ],
       external: 'angular'
     })
+    .transform("babelify", {presets: ["es2015"]})
     .bundle()
-    .pipe(source('dashboard.cjs.js'))
+    .pipe(source(`${cjs}.js`))
     .pipe(gulp.dest('./dist/js'));
   }));
 });
@@ -72,7 +77,7 @@ gulp.task('watch', function() {
   gulp.watch(htmlFiles.concat('./src/layout/index.html'), ['copy-html']);
 });
 
-gulp.task('serve', ['browserify', 'copy-js', 'copy-html', 'copy-index'], function() {
+gulp.task('serve', function() {
   return connect.server({
     root: 'dist'
   });

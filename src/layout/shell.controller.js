@@ -12,11 +12,12 @@ function Shell($timeout, config, Logger) {
   vm.busyMessage = 'Please wait ...';
   vm.isBusy = true;
   vm.showSplash = true;
+  var log = Logger('shell');
 
   activate();
 
   function activate() {
-    Logger.log(config.appTitle + ' loaded!', null);
+    log.info(config.appTitle + ' loaded!', null);
 //    Using a resolver on all routes ordataservice.ready in every controller
 //    dataservice.ready().then(function(){
 //      ();
