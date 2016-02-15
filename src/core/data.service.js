@@ -2,14 +2,14 @@
 
 angular
   .module("app.core")
-  .factory("data", appData);
+  .factory("Data", Data);
 
-appData.$inject = ["$http", "$q"];
+Data.$inject = ["$http", "$q"];
 
-function appData($http, $q) {
+function Data($http, $q) {
   var inited = false;
   var service = {
-    ready: ready
+    get: get
   }
   init();
   return service;
@@ -18,10 +18,29 @@ function appData($http, $q) {
     inited = true;
   }
 
-  function ready() {
-    $q.when({
-      id: 42,
-      name: "John"
-    });
+  function get(url) {
+    console.log('get request:', url);
+    var match = url.match(/\/(foos|token)\/(\d+)/);
+    if(!match)
+      return $q.reject(404);
+    console.log('got match', match);
+    var deferred = $q.defer();
+    if(match[1] === 'foos') {
+      $timeout(function() {
+        deferred.resolve({
+          name: 'Foo ' + match[2].toString(),
+          id: match[2]
+        });
+      }, 2000);
+    }
+    if(match[1] === 'token') {
+      console.log('getting a token');
+      $timeout(function() {
+        deferred.resolve({
+          token: 'abc123'
+        });
+      }, 2000);
+    }
+    return deferred.promise;
   }
 }

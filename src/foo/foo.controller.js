@@ -4,19 +4,18 @@ angular
   .module("app.foo")
   .controller("FoosController", FoosController);
 
-FoosController.$inject = ["$scope", "$route"];
+FoosController.$inject = ["$scope", "$route", "Foos", "Logger"];
 
-function FoosController($scope, $route) {
-  console.log('FoosController args:', arguments);
-  console.log('$route.current:', $route.current);
+function FoosController($scope, $route, Foos, Logger) {
   var vm = this;
 
   activate();
 
   function activate() {
     $scope.foo = "foo from Foo ctrl";
-//    Foo.getData().then(function(foos){
-//      vm.foos = foos;
-//    });
+    Foos.getFoo(1).then(function(foo){
+      console.log('got foo', foo);
+      vm.foos = [foo];
+    }).catch(function(err) { console.error(err) });
   }
 }

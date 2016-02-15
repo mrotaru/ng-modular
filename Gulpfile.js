@@ -9,7 +9,7 @@ var connect = require('gulp-connect');
 var liveReload = require('gulp-livereload');
 
 gulp.task('default', ['clean', 'build', 'serve']);
-gulp.task('build', ['browserify', 'copy-js', 'copy-html', 'copy-index']);
+gulp.task('build', ['clean', 'browserify', 'copy-js', 'copy-html', 'copy-index']);
 
 gulp.task('clean', function() {
   return del('./dist');
@@ -27,15 +27,15 @@ var jsFiles = [
   './node_modules/angular-toastr/dist/angular-toastr.js',
   '!./src/*test*/**/*.js'
 ].concat(commonJsModules.map(function(cjs){
-  return `!${cjs}/**/*.js`;
-}));
+  return `!./src/${cjs}/**/*.js`;
+} ));
 
 var htmlFiles = [
   './src/**/*.html',
   '!./src/layout/index.html'
 ];
 
-gulp.task('browserify', function() {
+gulp.task('browserify', ['clean'], function() {
   return merge(commonJsModules.map(function(cjs) {
     return browserify({
       entries: [ `./src/${cjs}/index.js` ],
@@ -44,24 +44,26 @@ gulp.task('browserify', function() {
     .transform("babelify", {presets: ["es2015"]})
     .bundle()
     .pipe(source(`${cjs}.js`))
-    .pipe(gulp.dest('./dist/js'));
+    .pipe(gulp.dest('./dist/js'))
+    .pipe(liveReload());
   }));
 });
 
-gulp.task('copy-js', function () {
+gulp.task('copy-js', ['clean'], function () {
   return gulp
     .src(jsFiles)
     .pipe(gulp.dest('./dist/js'))
     .pipe(liveReload());
 });
 
-gulp.task('copy-html', function () {
+gulp.task('copy-html', ['clean'], function () {
   return gulp
     .src(htmlFiles)
-    .pipe(gulp.dest('./dist/views'));
+    .pipe(gulp.dest('./dist/views'))
+    .pipe(liveReload());
 });
 
-gulp.task('copy-index', function () {
+gulp.task('copy-index', ['clean'], function () {
   return gulp
     .src([
       './src/layout/index.html'
@@ -70,14 +72,14 @@ gulp.task('copy-index', function () {
     .pipe(liveReload());
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
   liveReload.listen();
-  gulp.watch(jsFiles, ['copy-js']);
-  gulp.watch(commonJsModules, ['browserify']);
-  gulp.watch(htmlFiles.concat('./src/layout/index.html'), ['copy-html']);
+  gulp.watch(jsFiles, ['copy-js'])
+  gulp.watch(commonJsModules.map((cjs) => { return `!./src/${cjs}/**/*.js` }), ['browserify'])
+  gulp.watch(htmlFiles.concat('./src/layout/index.html'), ['copy-html'])
 });
 
-gulp.task('serve', function() {
+gulp.task('serve', ['build'], function() {
   return connect.server({
     root: 'dist'
   });

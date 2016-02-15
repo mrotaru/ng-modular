@@ -81,7 +81,8 @@ function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
       var destination = (current && (current.title || current.name || current.loadedTemplateUrl)) ||
         'unknown target';
       var msg = 'Error routing to ' + destination + '. ' + (rejection.msg || '');
-      logger.warning(msg, [current]);
+      console.log(arguments);
+      console.log(msg, [current]);
       $location.path('/');
     }
   }

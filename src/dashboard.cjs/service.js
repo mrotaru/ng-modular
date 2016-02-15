@@ -1,8 +1,8 @@
 module.exports = DashboardService;
 
-DashboardService.$inject = [];
+DashboardService.$inject = ['Data'];
 
-function DashboardService() {
+function DashboardService(Data) {
   var service = {
     getData: getData
   }
