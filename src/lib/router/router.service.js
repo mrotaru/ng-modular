@@ -90,6 +90,7 @@ function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
   function _handleRoutingSuccess() {
     $rootScope.$on('$routeChangeSuccess', updateDocTitle);
     function updateDocTitle(event, current, previous) {
+      console.log('routeChangeSuccess', event);
       handlingRouteChangeError = false;
       var title = RouteHelperConfig.config.docTitle + ' ' + (current.title || '');
       $rootScope.title = title; // data bind to <title>

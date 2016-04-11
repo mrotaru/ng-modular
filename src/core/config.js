@@ -17,7 +17,7 @@ function coreConfig($routeProvider, RouteHelperConfigProvider, LoggerProvider) {
   RouteHelperConfigProvider.config.docTitle = 'NG-Modular: ';
   RouteHelperConfigProvider.config.resolveAlways = {
      ready: ['Data', function (Data) {
-        return Data.get('/token');
+        return Data.get('/token/123');
      }]
   };
 }

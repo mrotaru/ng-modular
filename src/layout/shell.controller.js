@@ -4,8 +4,8 @@ angular
   .module('app.layout')
   .controller('Shell', Shell);
 
-Shell.$inject = ['$timeout', 'config', 'Logger'];
-function Shell($timeout, config, Logger) {
+Shell.$inject = ['$timeout', '$rootScope', '$route', 'config', 'Logger'];
+function Shell($timeout, $rootScope, $route, config, Logger) {
   var vm = this;
 
   vm.title = config.appTitle;
@@ -30,4 +30,19 @@ function Shell($timeout, config, Logger) {
       vm.showSplash = false;
     }, 1000);
   }
+
+  $rootScope.$on('$routeChangeStart', function(event, next, nextParams) {
+    console.log('Shell $routeChangeStart');
+    vm.isBusy = true;
+  });
+
+  $rootScope.$on('$routeChangeSuccess', function(event, next, nextParams) {
+    console.log('Shell $routeChangeSuccess');
+    vm.isBusy = false;
+  });
+
+  $rootScope.$on('$routeChangeError', function(event, next, nextParams) {
+    console.log('Shell $routeChangeError');
+    vm.isBusy = false;
+  });
 }

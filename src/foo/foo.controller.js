@@ -12,10 +12,12 @@ function FoosController($scope, $route, Foos, Logger) {
   activate();
 
   function activate() {
-    $scope.foo = "foo from Foo ctrl";
-    Foos.getFoo(1).then(function(foo){
+    Foos.getFoo(2).then(function(foo){
       console.log('got foo', foo);
-      vm.foos = [foo];
+    }).catch(function(err) { console.error(err) });
+    Foos.getFoos().then(function(foos){
+      console.log('got foos', foos);
+      vm.foos = foos;
     }).catch(function(err) { console.error(err) });
   }
 }

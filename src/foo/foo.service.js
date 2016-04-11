@@ -2,17 +2,22 @@
 
 angular
   .module("app.foo")
-  .factory("Foo", Foo);
+  .factory("Foos", Foos);
 
-Foo.$inject = ["$q", "$timeout", "Data", "Logger"];
-function Foo($q, $timeout, Data, Logger) {
+Foos.$inject = ["$q", "$timeout", "Data", "Logger"];
+function Foos($q, $timeout, Data, logger) {
   var service = {
-    getFoo: getFoo
+    getFoo: getFoo,
+    getFoos: getFoos
   }
   return service;
 
   function getFoo(id) {
-    logger.info('getting Foo...');
-    return Data.get('foos/' + id.toString());
+    logger('getting Foo...');
+    return Data.get('/foos/' + id.toString());
+  }
+
+  function getFoos() {
+    return Data.get('/foos');
   }
 }

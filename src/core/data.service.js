@@ -4,43 +4,49 @@ angular
   .module("app.core")
   .factory("Data", Data);
 
-Data.$inject = ["$http", "$q"];
+Data.$inject = ["$http", "$q", "$timeout"];
 
-function Data($http, $q) {
+function Data($http, $q, $timeout) {
   var inited = false;
   var service = {
     get: get
   }
-  init();
   return service;
 
-  function init() {
-    inited = true;
-  }
-
   function get(url) {
-    console.log('get request:', url);
-    var match = url.match(/\/(foos|token)\/(\d+)/);
-    if(!match)
-      return $q.reject(404);
-    console.log('got match', match);
     var deferred = $q.defer();
-    if(match[1] === 'foos') {
+    console.log('Data.get', url);
+
+    // 75% chance of 500 error
+    if(Math.random() >= 0.75)
+      return $q.reject(500);
+
+    // handling two types of urls:
+    var regexMulti  = /\/([a-z]+s)$/; // ex: /foos - returns an array of 'foo'
+    var regexSingle = /\/([a-z]+)\/(\d+)/; // ex: /foo/1 - reutrns the foo with id of 1
+
+    if(url.match(regexMulti)) {
+      $timeout(function() {
+        deferred.resolve([1,2,3,4,5].map(function(i){
+          return {
+            type: url.match(regexMulti)[1],
+            id: i
+          }
+        }));
+      }, 2000);
+    } else if (url.match(regexSingle)) {
+      var match = url.match(regexSingle);
       $timeout(function() {
         deferred.resolve({
-          name: 'Foo ' + match[2].toString(),
-          id: match[2]
+          type: match[1],
+          id: match[2],
+          blurb: 'this is the blurb for item of type ' + match[1] + ' with id of ' + match[2]
         });
       }, 2000);
+    } else {
+      return $q.reject(404);
     }
-    if(match[1] === 'token') {
-      console.log('getting a token');
-      $timeout(function() {
-        deferred.resolve({
-          token: 'abc123'
-        });
-      }, 2000);
-    }
+
     return deferred.promise;
   }
 }
