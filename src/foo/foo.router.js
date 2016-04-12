@@ -18,5 +18,12 @@ function configRoutes(RouteHelper) {
         nav: 2
       }
     }
+  },{
+    url: '/foo/:fooId',
+    config: {
+      templateUrl: '/views/foo/foo.html',
+      controller: 'FooController',
+      controllerAs: 'vm'
+    }
   }])
 }
