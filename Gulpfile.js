@@ -8,7 +8,7 @@ var del = require('del');
 var connect = require('gulp-connect');
 var liveReload = require('gulp-livereload');
 
-gulp.task('default', ['clean', 'build', 'serve']);
+gulp.task('default', ['clean', 'build', 'serve', 'watch']);
 gulp.task('build', ['clean', 'browserify', 'copy-js', 'copy-html', 'copy-index']);
 
 gulp.task('clean', function() {
@@ -35,7 +35,7 @@ var htmlFiles = [
   '!./src/layout/index.html'
 ];
 
-gulp.task('browserify', ['clean'], function() {
+gulp.task('browserify', function() {
   return merge(commonJsModules.map(function(cjs) {
     return browserify({
       entries: [ `./src/${cjs}/index.js` ],
@@ -45,35 +45,34 @@ gulp.task('browserify', ['clean'], function() {
     .bundle()
     .pipe(source(`${cjs}.js`))
     .pipe(gulp.dest('./dist/js'))
-    .pipe(liveReload());
+    .pipe(connect.reload());
   }));
 });
 
-gulp.task('copy-js', ['clean'], function () {
+gulp.task('copy-js', function () {
   return gulp
     .src(jsFiles)
     .pipe(gulp.dest('./dist/js'))
-    .pipe(liveReload());
+    .pipe(connect.reload());
 });
 
-gulp.task('copy-html', ['clean'], function () {
+gulp.task('copy-html', function () {
   return gulp
     .src(htmlFiles)
     .pipe(gulp.dest('./dist/views'))
-    .pipe(liveReload());
+    .pipe(connect.reload());
 });
 
-gulp.task('copy-index', ['clean'], function () {
+gulp.task('copy-index', function () {
   return gulp
     .src([
       './src/layout/index.html'
     ])
     .pipe(gulp.dest('./dist'))
-    .pipe(liveReload());
+    .pipe(connect.reload());
 });
 
 gulp.task('watch', ['build'], function() {
-  liveReload.listen();
   gulp.watch(jsFiles, ['copy-js'])
   gulp.watch(commonJsModules.map((cjs) => { return `!./src/${cjs}/**/*.js` }), ['browserify'])
   gulp.watch(htmlFiles.concat('./src/layout/index.html'), ['copy-html'])
@@ -81,6 +80,7 @@ gulp.task('watch', ['build'], function() {
 
 gulp.task('serve', ['build'], function() {
   return connect.server({
-    root: 'dist'
+    root: 'dist',
+    livereload: true
   });
 });
