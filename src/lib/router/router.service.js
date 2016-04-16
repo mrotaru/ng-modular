@@ -28,11 +28,12 @@ angular
   .module("lib.router")
   .factory("RouteHelper", RouteHelper);
 
-RouteHelper.$inject = [ "$location", "$rootScope", "$route", "Logger", "RouteHelperConfig"];
-function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
+RouteHelper.$inject = [ "$location", "$rootScope", "$log", "$route", "RouteHelperConfig"];
+function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   var handlingRouteChangeError = false;
   var routes = [];
   var $routeProvider = RouteHelperConfig.config.$routeProvider;
+  var logger = $log.getInstance('router');
 
   var service = {
     configureRoutes: configureRoutes,
@@ -47,7 +48,7 @@ function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
   }
 
   function configureRoutes(routes) {
-    console.log('configureRoutes', routes);
+    logger.log('configureRoutes', routes);
     routes.forEach(function(route) {
       route.config.resolve = angular.extend(
         route.config.resolve || {},
@@ -81,8 +82,7 @@ function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
       var destination = (current && (current.title || current.name || current.loadedTemplateUrl)) ||
         'unknown target';
       var msg = 'Error routing to ' + destination + '. ' + (rejection.msg || '');
-      console.log(arguments);
-      console.log(msg, [current]);
+      logger.log(msg);
       $location.path('/');
     }
   }
@@ -90,7 +90,7 @@ function RouteHelper($location, $rootScope, $route, logger, RouteHelperConfig) {
   function _handleRoutingSuccess() {
     $rootScope.$on('$routeChangeSuccess', updateDocTitle);
     function updateDocTitle(event, current, previous) {
-      console.log('routeChangeSuccess', event);
+      logger.log('routeChangeSuccess', event);
       handlingRouteChangeError = false;
       var title = RouteHelperConfig.config.docTitle + ' ' + (current.title || '');
       $rootScope.title = title; // data bind to <title>

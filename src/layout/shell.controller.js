@@ -4,20 +4,20 @@ angular
   .module('app.layout')
   .controller('Shell', Shell);
 
-Shell.$inject = ['$timeout', '$rootScope', '$route', 'config', 'Logger'];
-function Shell($timeout, $rootScope, $route, config, Logger) {
+Shell.$inject = ['$timeout', '$log', '$rootScope', '$route', 'config'];
+function Shell($timeout, $log, $rootScope, $route, config) {
   var vm = this;
 
   vm.title = config.appTitle;
   vm.busyMessage = 'Please wait ...';
   vm.isBusy = true;
   vm.showSplash = true;
-  var log = Logger();
+  var logger = $log.getInstance(config.appTitle);
 
   activate();
 
   function activate() {
-    log(config.appTitle + ' loaded!', null);
+    logger.log('loaded!');
 //    Using a resolver on all routes ordataservice.ready in every controller
 //    dataservice.ready().then(function(){
 //      ();
@@ -32,17 +32,17 @@ function Shell($timeout, $rootScope, $route, config, Logger) {
   }
 
   $rootScope.$on('$routeChangeStart', function(event, next, nextParams) {
-    console.log('Shell $routeChangeStart');
+    logger.log('Shell $routeChangeStart');
     vm.isBusy = true;
   });
 
   $rootScope.$on('$routeChangeSuccess', function(event, next, nextParams) {
-    console.log('Shell $routeChangeSuccess');
+    logger.log('Shell $routeChangeSuccess');
     vm.isBusy = false;
   });
 
   $rootScope.$on('$routeChangeError', function(event, next, nextParams) {
-    console.log('Shell $routeChangeError');
+    logger.log('Shell $routeChangeError');
     vm.isBusy = false;
   });
 }

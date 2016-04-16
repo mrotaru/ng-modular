@@ -10,7 +10,9 @@ angular
     /**
      * Reusable common modules
      */
-    'lib.logger', 'lib.router',
+    'lib.logger',
+    'lib.router',
+//    'lib.exception',
 
     /**
      * Third party libs available to all modules (part of core)

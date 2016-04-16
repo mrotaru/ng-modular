@@ -10,12 +10,11 @@ function DashboardService(Data) {
   return service;
 
   function init() {
-    console.log('init DashboardService');
   }
 
   function getData(url) {
     if(!url)
-      return 'no url';
+      throw new Error('no url');
     return url.split('/').pop();
   }
 }

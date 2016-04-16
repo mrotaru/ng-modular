@@ -16,9 +16,9 @@ gulp.task('clean', function() {
 });
 
 var commonJsModules = [
-  'dashboard.cjs',
-  'lib/logger.cjs',
-  'lib/exception.cjs'
+  'dashboard',
+  'lib/logger',
+  'lib/exception'
 ];
 
 var jsFiles = [

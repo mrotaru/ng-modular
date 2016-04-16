@@ -4,8 +4,9 @@ angular
   .module("app.foo")
   .factory("Foos", Foos);
 
-Foos.$inject = ["$q", "$timeout", "Data", "Logger"];
-function Foos($q, $timeout, Data, logger) {
+Foos.$inject = ["$q", "$log", "$timeout", "Data"];
+function Foos($q, $log, $timeout, Data) {
+  var logger = $log.getInstance('foos-service');
   var service = {
     getFoo: getFoo,
     getFoos: getFoos
@@ -13,7 +14,7 @@ function Foos($q, $timeout, Data, logger) {
   return service;
 
   function getFoo(id) {
-    logger('getting Foo...');
+    logger.log('getting Foo...');
     return Data.get('/foos/' + id.toString());
   }
 

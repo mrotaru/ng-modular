@@ -18,8 +18,6 @@ function NavController($route, RouteHelper) {
     }).sort(function(route1, route2){
       return route1.settings.nav - route2.settings.nav;
     });
-    console.log('routes:', vm.routes);
-    console.log('navRoutes:', vm.navRoutes);
   }
 
   function isCurrent(route) {

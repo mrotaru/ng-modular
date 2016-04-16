@@ -3,14 +3,13 @@ module.exports = config;
 function config($provide) {
   $provide.decorator('$exceptionHandler', fooExceptionHandler);
 
-  function fooExceptionHandler($delegate, exceptionHandler, Logger) {
+  fooExceptionHandler.$inject = ['$delegate', '$log', 'exceptionHandler'];
+  function fooExceptionHandler($delegate, $log, exceptionHandler) {
     return function(exception, cause) {
-      var log = Logger();
-      var appErrorPrefix = exceptionHandler.config.appErrorPrefix || '';
+      var loger = $log.getInstance(exceptionHandler.config.appErrorPrefix);
       var errorData = {exception: exception, cause: cause};
-      exception.message = appErrorPrefix + exception.message;
       $delegate(exception, cause);
-      log(exception.message, errorData);
+      logger.error(exception.message, errorData);
       throw { message: exception.message };
     }
   }

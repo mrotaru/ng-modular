@@ -10,9 +10,8 @@ core.value('config', {
 
 core.config(coreConfig);
 
-coreConfig.$inject = ["$routeProvider", "RouteHelperConfigProvider", "LoggerProvider"];
-function coreConfig($routeProvider, RouteHelperConfigProvider, LoggerProvider) {
-//  LoggerProvider.disable();
+coreConfig.$inject = ["$routeProvider", "$logProvider", "RouteHelperConfigProvider"];
+function coreConfig($routeProvider, $logProvider, RouteHelperConfigProvider) {
   RouteHelperConfigProvider.config.$routeProvider = $routeProvider;
   RouteHelperConfigProvider.config.docTitle = 'NG-Modular: ';
   RouteHelperConfigProvider.config.resolveAlways = {
