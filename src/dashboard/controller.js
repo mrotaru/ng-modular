@@ -12,6 +12,6 @@ function DashboardController($scope, $log, DashboardService) {
 
   function activate() {
     vm.result = DashboardService.getData(vm.foo);
-    logger.log('result:', vm.result);
+    logger.debug('result:', vm.result);
   }
 }

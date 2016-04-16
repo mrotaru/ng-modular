@@ -17,7 +17,7 @@ function Shell($timeout, $log, $rootScope, $route, config) {
   activate();
 
   function activate() {
-    logger.log('loaded!');
+    logger.debug('loaded!');
 //    Using a resolver on all routes ordataservice.ready in every controller
 //    dataservice.ready().then(function(){
 //      ();
@@ -32,17 +32,17 @@ function Shell($timeout, $log, $rootScope, $route, config) {
   }
 
   $rootScope.$on('$routeChangeStart', function(event, next, nextParams) {
-    logger.log('Shell $routeChangeStart');
+    logger.debug('Shell $routeChangeStart');
     vm.isBusy = true;
   });
 
   $rootScope.$on('$routeChangeSuccess', function(event, next, nextParams) {
-    logger.log('Shell $routeChangeSuccess');
+    logger.debug('Shell $routeChangeSuccess');
     vm.isBusy = false;
   });
 
   $rootScope.$on('$routeChangeError', function(event, next, nextParams) {
-    logger.log('Shell $routeChangeError');
+    logger.debug('Shell $routeChangeError');
     vm.isBusy = false;
   });
 }

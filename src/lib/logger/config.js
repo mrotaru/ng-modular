@@ -1,5 +1,6 @@
 module.exports = config;
 
+config.$inject = ['$provide'];
 function config($provide) {
   $provide.decorator('$log', decorator);
 

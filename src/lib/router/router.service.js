@@ -48,7 +48,7 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   }
 
   function configureRoutes(routes) {
-    logger.log('configureRoutes', routes);
+    logger.debug('configureRoutes', routes);
     routes.forEach(function(route) {
       route.config.resolve = angular.extend(
         route.config.resolve || {},
@@ -82,7 +82,7 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
       var destination = (current && (current.title || current.name || current.loadedTemplateUrl)) ||
         'unknown target';
       var msg = 'Error routing to ' + destination + '. ' + (rejection.msg || '');
-      logger.log(msg);
+      logger.error(msg);
       $location.path('/');
     }
   }
@@ -90,7 +90,7 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   function _handleRoutingSuccess() {
     $rootScope.$on('$routeChangeSuccess', updateDocTitle);
     function updateDocTitle(event, current, previous) {
-      logger.log('routeChangeSuccess', event);
+      logger.debug('routeChangeSuccess', event);
       handlingRouteChangeError = false;
       var title = RouteHelperConfig.config.docTitle + ' ' + (current.title || '');
       $rootScope.title = title; // data bind to <title>

@@ -16,7 +16,7 @@ function Data($http, $q, $log, $timeout) {
 
   function get(url) {
     var deferred = $q.defer();
-    logger.log('Data.get', url);
+    logger.debug('Data.get', url);
 
     // 75% chance of 500 error
     if(Math.random() >= 0.75)

@@ -14,7 +14,7 @@ function FoosController($scope, $log, $route, Foos) {
 
   function activate() {
     Foos.getFoos().then(function(foos){
-      logger.log('got foos', foos);
+      logger.debug('got foos', foos);
       vm.foos = foos;
     }).catch(function(err) {
       logger.error(err)

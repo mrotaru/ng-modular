@@ -14,7 +14,7 @@ function Foos($q, $log, $timeout, Data) {
   return service;
 
   function getFoo(id) {
-    logger.log('getting Foo...');
+    logger.debug('getting Foo...');
     return Data.get('/foos/' + id.toString());
   }
 

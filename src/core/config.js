@@ -12,6 +12,7 @@ core.config(coreConfig);
 
 coreConfig.$inject = ["$routeProvider", "$logProvider", "RouteHelperConfigProvider"];
 function coreConfig($routeProvider, $logProvider, RouteHelperConfigProvider) {
+  $logProvider.debugEnabled(true);
   RouteHelperConfigProvider.config.$routeProvider = $routeProvider;
   RouteHelperConfigProvider.config.docTitle = 'NG-Modular: ';
   RouteHelperConfigProvider.config.resolveAlways = {
