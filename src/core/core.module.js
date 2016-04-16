@@ -12,7 +12,7 @@ angular
      */
     'lib.logger',
     'lib.router',
-//    'lib.exception',
+    'lib.exception',
 
     /**
      * Third party libs available to all modules (part of core)

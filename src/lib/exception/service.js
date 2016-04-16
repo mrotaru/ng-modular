@@ -1,4 +1,4 @@
-module.exports = exceptionHandler;
+module.exports = exceptionHandlerProvider;
 
 function exceptionHandlerProvider() {
   this.config = {

@@ -18,13 +18,9 @@ function Data($http, $q, $log, $timeout) {
     var deferred = $q.defer();
     logger.debug('Data.get', url);
 
-    // 75% chance of 500 error
+    // 25% chance of 500 error
     if(Math.random() >= 0.75)
       return $q.reject(500);
-
-    // 50% chance of exception
-    if(Math.random() >= 0.50)
-      throw new Error('exception in data');
 
     // handling two types of urls:
     var regexMulti  = /\/([a-z]+s)$/; // ex: /foos - returns an array of 'foo'
