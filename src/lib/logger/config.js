@@ -14,7 +14,9 @@ function config($provide) {
       };
       for(let fn of fns) {
         instance[fn] = (message, ...args) => {
-          $log[fn].apply(this, [`[${context}] ${message}`].concat(args));
+          let stack = (new Error()).stack.split(/\n/);
+          var location = stack[2].match(/\((http.*)\)$/)[1];
+          $log[fn].apply(this, [`[${context}] ${message}`, ...args,  location]);
         }
       }
       return instance;

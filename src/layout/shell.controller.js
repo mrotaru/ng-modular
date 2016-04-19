@@ -10,14 +10,14 @@ function Shell($timeout, $log, $rootScope, $route, config) {
 
   vm.title = config.appTitle;
   vm.busyMessage = 'Please wait ...';
-  vm.isBusy = true;
+  vm.isBusy = false;
   vm.showSplash = true;
-  var logger = $log.getInstance(config.appTitle);
+  var logger = $log.getInstance('shell');
 
   activate();
 
   function activate() {
-    logger.debug('loaded!');
+    logger.debug(config.appTitle + ' loaded!');
 //    Using a resolver on all routes ordataservice.ready in every controller
 //    dataservice.ready().then(function(){
 //      ();

@@ -48,7 +48,6 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   }
 
   function configureRoutes(routes) {
-    logger.debug('configureRoutes', routes);
     routes.forEach(function(route) {
       route.config.resolve = angular.extend(
         route.config.resolve || {},
@@ -75,6 +74,7 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   function _handleRoutingErrors() {
     $rootScope.$on('$routeChangeError', routeChangeError);
     function routeChangeError(event, current, previous, rejection) {
+      logger.error('router $routeChangeError', handlingRouteChangeError, rejection);
       if (handlingRouteChangeError) {
         return;
       }

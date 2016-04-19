@@ -19,8 +19,8 @@ function Data($http, $q, $log, $timeout) {
     logger.debug('Data.get', url);
 
     // 25% chance of 500 error
-    if(Math.random() >= 0.75)
-      return $q.reject(500);
+    if(Math.random() >= 0.50)
+      return $q.reject({code: 500, message: 'Server error.'});
 
     // handling two types of urls:
     var regexMulti  = /\/([a-z]+s)$/; // ex: /foos - returns an array of 'foo'
