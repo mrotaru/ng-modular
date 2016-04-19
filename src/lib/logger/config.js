@@ -15,7 +15,7 @@ function config($provide) {
       for(let fn of fns) {
         instance[fn] = (message, ...args) => {
           let stack = (new Error()).stack.split(/\n/);
-          var location = stack[2].match(/\((http.*)\)$/)[1];
+          let location = stack[2].match(/(http.*)$/)[1];
           $log[fn].apply(this, [`[${context}] ${message}`, ...args,  location]);
         }
       }
