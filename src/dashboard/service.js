@@ -1,20 +1,16 @@
 module.exports = DashboardService;
 
-DashboardService.$inject = ['Data'];
+DashboardService.$inject = ['$q', 'Data'];
 
-function DashboardService(Data) {
+function DashboardService($q, Data) {
+  var token = null;
   var service = {
-    getData: getData
+    getToken: getToken
   }
-  init();
   return service;
 
-  function init() {
-  }
-
-  function getData(url) {
-    if(!url)
-      throw new Error('no url');
-    return url.split('/').pop();
+  function getToken() {
+    if(token) return $q.when(token);
+    return Data.get('/token/42');
   }
 }

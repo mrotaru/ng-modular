@@ -12,7 +12,7 @@ function Shell($timeout, $log, $rootScope, $route, config) {
   vm.busyMessage = 'Please wait ...';
   vm.isBusy = false;
   vm.showSplash = true;
-  var logger = $log.getInstance('shell');
+  var logger = $log.getInstance('c:shell');
 
   activate();
 

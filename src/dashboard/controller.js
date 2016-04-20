@@ -4,14 +4,15 @@ DashboardController.$inject = ['$scope', '$log', 'DashboardService'];
 
 function DashboardController($scope, $log, DashboardService) {
   var vm = this;
-  vm.foo = "foo/42";
-  vm.result = null;
+  vm.token = null;
   var logger = $log.getInstance('c:dashboard');
 
   activate();
 
   function activate() {
-    vm.result = DashboardService.getData(vm.foo);
-    logger.debug('result:', vm.result);
+    DashboardService.getToken().then(function(token){
+      vm.token = token;
+      logger.debug('got token:', token);
+    });
   }
 }

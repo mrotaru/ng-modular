@@ -33,7 +33,7 @@ function RouteHelper($location, $rootScope, $log, $route, RouteHelperConfig) {
   var handlingRouteChangeError = false;
   var routes = [];
   var $routeProvider = RouteHelperConfig.config.$routeProvider;
-  var logger = $log.getInstance('router');
+  var logger = $log.getInstance('s:router');
 
   var service = {
     configureRoutes: configureRoutes,
