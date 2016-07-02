@@ -8,7 +8,7 @@ function config($provide) {
   function decorator($log) {
     const fns = ['log', 'info', 'warn', 'debug', 'error'];
 
-    $log.getInstance = function(context) {
+    $log.getInstance = function(context = null) {
       let instance = {
         context: context
       };

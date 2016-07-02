@@ -1,0 +1,13 @@
+nav.navbar.navbar-default.navbar-inverse
+  .container-fluid
+    .navbar-header
+      a.navbar-brand(href='#/movies') At The Movies
+    ul.nav.navbar-nav.navbar-left
+      li(
+        ng-repeat='route in vm.routes'
+        ng-class='vm.getCurrentClass(route)')
+        a(href='#{{route.url}}')
+          span.glyphicon(
+            ng-if='route.nav.glyphicon'
+            ng-class='vm.getGlyphiconClass(route.nav.glyphicon)')
+          | {{route.nav.title}}

@@ -1,9 +1,0 @@
-<div ng-controller="Shell as vm">
-    <section id="content" class="content">
-      <div ng-include="'/views/layout/nav.html'"></div>
-
-      <div ng-view></div>
-
-      <div ng-if="vm.isBusy" class="page-spinner-message overlay-message">{{vm.busyMessage}}</div>
-    </section>
-</div>

@@ -1,0 +1,2 @@
+- layout-related directives, such as navigation
+- common layout for pages
