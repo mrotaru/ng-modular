@@ -1,8 +1,6 @@
 'use strict'
 
-let angular = require('angular')
-
-angular
+require('angular')
   .module('app.books', ['core.data'])
   .component('books', require('./list.js'))
   .component('book', require('./single.js'))

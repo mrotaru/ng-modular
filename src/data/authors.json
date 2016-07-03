@@ -1,12 +1,15 @@
 [
   {
     "name": "Rick Riordan",
-    "id": 1
-  },{
+    "id": 1,
+    "book_ids": [1,2]
+  }, {
     "name" : "Jostein Gaarder",
-    "id": 2
-  },{
+    "id": 2,
+    "book_ids": [3]
+  }, {
     "name" : "Michael McCandless",
-    "id": 3
+    "id": 3,
+    "book_ids": [4]
   }
 ]

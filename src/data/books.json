@@ -4,23 +4,17 @@
     "name" : "The Lightning Thief",
     "author_id" : 1,
     "rating": 4
-  }
-,
-  {
+  }, {
     "id" : 2,
     "name" : "The Sea of Monsters",
     "author_id" : 1,
     "rarting" : 3
-  }
-,
-  {
+  }, {
     "id" : 3,
     "name" : "Sophie's World : The Greek Philosophers",
     "author_id" : 2
     "rating" : 4
-  }
-,
-  {
+  }, {
     "id" : 4,
     "name" : "Lucene in Action, Second Edition",
     "author_id" : 3
