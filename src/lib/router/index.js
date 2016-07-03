@@ -2,7 +2,11 @@
 
 let angular = require('angular')
 
-module.exports = function routeHelperProvider ($routeProvider) {
+angular
+  .module('lib.router', [])
+  .provider('routeHelper', routeHelperProvider)
+
+function routeHelperProvider ($routeProvider) {
   let config = {}
   let routes = []
 
@@ -11,11 +15,10 @@ module.exports = function routeHelperProvider ($routeProvider) {
   }
 
   this.$get = function ($rootScope) {
-
     let currentTitle = ''
 
     $rootScope.$on('$routeChangeSuccess',
-      function(event, current, previous) {
+      function (event, current, previous) {
         if (current.$$route.title) {
           currentTitle = current.$$route.title
         }
@@ -42,4 +45,3 @@ module.exports = function routeHelperProvider ($routeProvider) {
     }
   }
 }
-
