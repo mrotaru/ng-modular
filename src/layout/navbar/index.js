@@ -1,10 +1,9 @@
 'use strict'
 
-let app = require('angular').module('app')
-
-module.exports = app
-  .component('bm-navbar', {
-    templateUrl: 'navbar/view.html',
+require('angular')
+  .module('app.layout')
+  .component('bmNavbar', {
+    templateUrl: 'layout/navbar/view.html',
     controller: controller,
     controllerAs: 'vm'
   })

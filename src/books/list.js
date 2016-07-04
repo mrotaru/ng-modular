@@ -1,8 +1,6 @@
 'use strict'
 
-module.exports = component
-
-let component = {
+module.exports = {
   templateUrl: 'books/list.html',
   controllerAs: 'vm',
   controller: controller
@@ -13,11 +11,11 @@ function controller (Books, $location) {
 
   vm.$onInit = function () {
     Books.getAll()
-      .then((books) => { vm.books = books })
+      .then((res) => { vm.books = res.data })
   }
 
   vm.increaseRating = (book) => book.rating++
   vm.decreaseRating = (book) => book.rating--
-  vm.showDetails = (id) => $location.path(`/details/${id}`)
+  vm.showDetails = (id) => $location.path(`/book/${id}`)
   vm.setRating = (book, rating) => { book.rating = rating }
 }

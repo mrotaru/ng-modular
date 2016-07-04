@@ -2,7 +2,7 @@
 
 require('angular')
   .module('lib.logger', [])
-  .config(loggerConfig)
+  .config(config)
 
 function config ($provide) {
   $provide.decorator('$log', decorator)
@@ -27,3 +27,5 @@ function config ($provide) {
     return $log
   }
 }
+
+module.exports = 'lib.logger'

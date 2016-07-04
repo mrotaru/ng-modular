@@ -1,7 +1,7 @@
 'use strict'
 
 require('angular')
-  .module('app.data', ['$q'])
+  .module('core.data', [])
   .provider('Data', Data)
 
 function Data () {
@@ -17,8 +17,8 @@ function Data () {
 
     let mockHttp = {
       get: (url) => {
-        let {endpoint, id} = url.split('/')
-        let res = data[endpoint](id)
+        let [endpoint, id] = url.split('/')
+        let res = data[endpoint](Number.parseInt(id))
         return res
           ? $q.when({ code: 200, data: res })
           : $q.reject({ code: 404, data: { message: 'Not found' } })

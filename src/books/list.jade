@@ -1,0 +1,19 @@
+.book-list
+  table.table
+    thead
+      tr
+        td Title
+        td Rating
+        td
+    tbody
+      tr(ng-repeat='book in vm.books')
+        td {{book.name}}
+        td {{book.rating}}
+        td
+          .btn-group
+            button.btn(ng-click='vm.increaseRating(book)')
+              span.glyphicon.glyphicon-plus
+            button.btn(ng-click='vm.decreaseRating(book)')
+              span.glyphicon.glyphicon-minus
+          button.btn(ng-click='vm.showDetails(book.id)')
+            span.glyphicon.glyphicon-zoom-in

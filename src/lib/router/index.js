@@ -17,9 +17,16 @@ function routeHelperProvider ($routeProvider) {
   this.$get = function ($rootScope) {
     let currentTitle = ''
 
+    $rootScope.$on('$routeChangeError',
+      function () {
+        console.log('rce', arguments);
+      }
+    )
+
     $rootScope.$on('$routeChangeSuccess',
       function (event, current, previous) {
-        if (current.$$route.title) {
+        console.log(current);
+        if (current.$$route && current.$$route.title) {
           currentTitle = current.$$route.title
         }
       }
@@ -45,3 +52,5 @@ function routeHelperProvider ($routeProvider) {
     }
   }
 }
+
+module.exports = 'lib.router'

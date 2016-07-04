@@ -1,5 +1,7 @@
 'use strict'
 
+require('toastr')
+
 module.exports = require('angular')
   .module('app.core', [
 
@@ -12,7 +14,7 @@ module.exports = require('angular')
     require('../lib/logger'),
 
     // third party libs available to all modules (part of core)
-    require('toastr')
+    // toastr; will be global
   ])
   .config(function (routeHelperProvider, exceptionHandlerProvider) {
     routeHelperProvider.config({
@@ -21,7 +23,7 @@ module.exports = require('angular')
       }
     })
 
-    exceptionHandlerProvider.config({
+    exceptionHandlerProvider.configure({
       appErrorPrefix: 'Modular Demo'
     })
   })

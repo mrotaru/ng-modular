@@ -1,9 +1,10 @@
 'use strict'
 
 require('./core')
+require('./data')
+require('./directives')
 require('./books')
 require('./authors')
-require('./data')
 require('./about')
 require('./layout')
 

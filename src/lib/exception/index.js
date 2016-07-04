@@ -22,15 +22,17 @@ function exceptionHandler () {
 }
 
 function config ($provide, exceptionHandlerProvider) {
-  $provide.decorator('$exceptionHandler', bmExceptionHandler)
-  exceptionHandlerProvider.configure({
-    appErrorPrefix: 'app'
-  })
+//  $provide.decorator('$exceptionHandler', bmExceptionHandler)
+//  exceptionHandlerProvider.configure({
+//    appErrorPrefix: 'app'
+//  })
 
-  function bmExceptionHandler ($delegate, $log, exceptionHandler) {
-    return function (exception, cause) {
-      var logger = $log.getInstance(exceptionHandler.config.appErrorPrefix)
-      logger.error(exception)
-    }
-  }
+//  function bmExceptionHandler ($delegate, $log, exceptionHandler) {
+//    return function (exception, cause) {
+//      var logger = $log.getInstance(exceptionHandler.config.appErrorPrefix)
+//      logger.error(exception)
+//    }
+//  }
 }
+
+module.exports = 'lib.exception'

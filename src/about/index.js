@@ -1,14 +1,12 @@
 'use strict'
 
 require('angular')
-  .module('app.layout', ['lib.router'])
+  .module('lib.router')
   .run(function (routeHelper) {
     routeHelper.addRoutes([{
-      url: '/',
+      url: '/about',
       whenConfig: {
-        template: '<bm-books></bm-books>'
+        templateUrl: 'about/view.html'
       }
     }])
   })
-
-require('./navbar')
