@@ -4,7 +4,7 @@ require('angular')
   .module('app.books', ['core.data'])
   .component('bmBooks', require('./list.js'))
   .component('bmBook', require('./single.js'))
-  .provider('Books', require('./service.js'))
+  .factory('Books', require('./service.js'))
   .run(function routes (routeHelper) {
     routeHelper.addRoutes([{
       url: '/books',
