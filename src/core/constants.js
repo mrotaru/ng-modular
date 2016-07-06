@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
-var core = angular.module("app.core");
-
-core.constant('baz', 'baz-constant');
+module.exports = {
+  'version': '1.0.0'
+}

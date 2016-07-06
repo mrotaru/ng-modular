@@ -2,7 +2,7 @@
 
 require('toastr')
 
-module.exports = require('angular')
+let core = require('angular')
   .module('app.core', [
 
     // angular built-in modules
@@ -11,23 +11,20 @@ module.exports = require('angular')
     // reusable common modules
     require('../lib/exception'),
     require('../lib/router'),
-    require('../lib/logger'),
+    require('../lib/logger')
 
     // third party libs available to all modules (part of core)
     // toastr; will be global
   ])
-  .config(function (routeHelperProvider, exceptionHandlerProvider) {
-    routeHelperProvider.config({
-      resolveAlways: function () {
-        return {}
-      }
-    })
-
-    exceptionHandlerProvider.configure({
-      appErrorPrefix: 'Modular Demo'
-    })
-  })
+  .config(require('./config.js'))
   .run(['$route', function () {
     // if ng-view is in an XHR-loaded template
     // https://github.com/angular/angular.js/issues/1213#issuecomment-23963063
   }])
+
+let constants = require('./constants.js')
+for (let constant in constants) {
+  core.constant(constant, constants[constant])
+}
+
+module.exports = core
